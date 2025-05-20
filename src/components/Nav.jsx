@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import '../styles/Nav.css';
 
 const Nav = ({ productosCarrito }) => {
@@ -9,10 +9,10 @@ const Nav = ({ productosCarrito }) => {
             <div className="nav-content">
                 <Link to="/" className="nav-brand">Kiosco Express</Link>
                 <div className="nav-links">
-                    <Link to="/" className="nav-link">Inicio</Link>
-                    <Link to="/productos" className="nav-link">Productos</Link>
-                    <Link to="/nosotros" className="nav-link">Nosotros</Link>
-                    <Link to="/contacto" className="nav-link">Contacto</Link>
+                    <NavLink to="/" className="nav-link">Inicio</NavLink>
+                    <NavLink to="/productos" className="nav-link">Productos</NavLink>
+                    <NavLink to="/nosotros" className="nav-link">Nosotros</NavLink>
+                    <NavLink to="/contacto" className="nav-link">Contacto</NavLink>
                 </div>
                 <div className="nav-buttons">
                     <Link to="/carrito" className="nav-button">
