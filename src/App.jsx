@@ -73,7 +73,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path='/login' element={<Login user={usuarioLogeado} admin={adminLogeado} setLogeadoAdmin={manejarAdmin} setLogeadoUser={manejarUser}/>}/>
-          <Route path="/productos" element={<ProductosContainer funcionCarrito={funcionCarrito}/>} />
+          <Route path="/productos" element={<ProductosContainer funcionCarrito={funcionCarrito} usuarioLogeado={usuarioLogeado} />} />
           <Route path="/carrito" element={
             <Carrito 
               productosCarrito={productosCarrito} 

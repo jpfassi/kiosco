@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import '../styles/Producto.css';
+import { dispararSweetBasico } from "../assets/SweetAlert"; // Asegúrate de que esta importación sea correcta
 
-const Producto = ({ producto, onAgregarAlCarrito }) => {
+const Producto = ({ producto, onAgregarAlCarrito, usuarioLogeado }) => {
     const [cantidad, setCantidad] = useState(1);
+    const navigate = useNavigate();
 
     const sumarCantidad = () => {
         if (cantidad < producto.stock) {
@@ -18,7 +20,13 @@ const Producto = ({ producto, onAgregarAlCarrito }) => {
     };
 
     const handleAgregarAlCarrito = () => {
+        if (!usuarioLogeado) {
+            dispararSweetBasico("Necesitas iniciar sesión", "Por favor, inicia sesión para agregar productos al carrito", "warning", "Entendido");
+            navigate('/login');
+            return;
+        }
         onAgregarAlCarrito(cantidad);
+        dispararSweetBasico("Producto Agregado", "El producto fue agregado al carrito con éxito", "success", "Cerrar");
         setCantidad(1); // Resetear la cantidad después de agregar
     };
 

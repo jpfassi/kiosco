@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Producto from './Producto';
 import '../styles/ProductosContainer.css';
 
-const ProductosContainer = ({ funcionCarrito }) => {
+const ProductosContainer = ({ funcionCarrito, usuarioLogeado }) => {
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -56,6 +56,7 @@ const ProductosContainer = ({ funcionCarrito }) => {
                                 stock: producto.stock || 10,
                                 cantidad
                             })}
+                            usuarioLogeado={usuarioLogeado}
                         />
                     </div>
                 ))}
