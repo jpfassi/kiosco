@@ -1,20 +1,22 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
+import { useAuth } from '../contexts/AuthContext';
 import styled from 'styled-components';
-import { FaShoppingCart, FaUser, FaSignOutAlt, FaHome } from 'react-icons/fa';
+import { FaShoppingCart, FaUser, FaSignOutAlt, FaSignInAlt } from 'react-icons/fa';
 
 const Nav = styled.nav`
-  background: #007bff;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   padding: 1rem 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 `;
 
 const NavContainer = styled.div`
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -24,153 +26,215 @@ const NavContainer = styled.div`
 const Logo = styled(Link)`
   color: white;
   text-decoration: none;
-  font-size: 1.5rem;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  font-size: 1.8rem;
+  font-weight: 800;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(45deg, #fff, #f0f0f0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   
   &:hover {
-    color: #f8f9fa;
+    transform: scale(1.05);
+    text-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
   }
 `;
 
 const NavLinks = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;
-  
-  @media (max-width: 768px) {
-    gap: 0.5rem;
-  }
+  gap: 2rem;
 `;
 
 const NavLink = styled(Link)`
-  color: white;
+  color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 15px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
   
-  &:hover {
-    background: rgba(255, 255, 255, 0.1);
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
   }
   
-  @media (max-width: 768px) {
-    padding: 0.5rem;
-    font-size: 0.9rem;
+  &:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+    
+    &::before {
+      left: 100%;
+    }
   }
 `;
 
-const Button = styled.button`
-  background: transparent;
+const CartButton = styled(Link)`
+  position: relative;
   color: white;
-  border: 1px solid white;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.2s;
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.5rem;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+  position: relative;
+  overflow: hidden;
   
-  &:hover {
-    background: white;
-    color: #007bff;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
   }
   
-  @media (max-width: 768px) {
-    padding: 0.5rem;
-    font-size: 0.9rem;
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(78, 205, 196, 0.6);
+    
+    &::before {
+      left: 100%;
+    }
   }
 `;
 
 const CartBadge = styled.span`
-  background: #dc3545;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
   color: white;
   border-radius: 50%;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.8rem;
-  margin-left: 0.25rem;
-  min-width: 1.2rem;
-  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.6);
+  animation: pulse 2s infinite;
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 `;
 
 const UserInfo = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
   color: white;
-  font-size: 0.9rem;
-  
-  @media (max-width: 768px) {
-    display: none;
-  }
+  font-weight: 600;
 `;
 
-const MobileMenu = styled.div`
-  display: none;
+const AuthButton = styled.button`
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  position: relative;
+  overflow: hidden;
   
-  @media (max-width: 768px) {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.6);
+    
+    &::before {
+      left: 100%;
+    }
+  }
+  
+  &.logout {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+    
+    &:hover {
+      box-shadow: 0 10px 30px rgba(255, 107, 107, 0.6);
+    }
   }
 `;
 
 const Navbar = () => {
-  const { user, isAuthenticated, logout } = useAuth();
-  const { getTotalItems } = useCart();
-  const navigate = useNavigate();
+  const { cartItems } = useCart();
+  const { isAuthenticated, user, logout } = useAuth();
 
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
+  const cartItemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <Nav>
       <NavContainer>
-        <Logo to="/">
-          <FaHome />
-          Kiosco de Golosinas
-        </Logo>
-
+        <Logo to="/">🍬 Kiosco Dulce</Logo>
+        
         <NavLinks>
-          <NavLink to="/">
-            <FaHome />
-            Inicio
-          </NavLink>
-
-          <NavLink to="/cart">
+          <NavLink to="/">Inicio</NavLink>
+          <NavLink to="/products">Productos</NavLink>
+          
+          <CartButton to="/cart">
             <FaShoppingCart />
             Carrito
-            {getTotalItems() > 0 && (
-              <CartBadge>{getTotalItems()}</CartBadge>
-            )}
-          </NavLink>
-
+            {cartItemCount > 0 && <CartBadge>{cartItemCount}</CartBadge>}
+          </CartButton>
+          
           {isAuthenticated ? (
-            <>
-              <UserInfo>
-                <FaUser />
-                Hola, {user?.name || 'Usuario'}
-              </UserInfo>
-              <Button onClick={handleLogout}>
+            <UserInfo>
+              <span>👤 {user?.name || 'Usuario'}</span>
+              <AuthButton className="logout" onClick={logout}>
                 <FaSignOutAlt />
                 Cerrar Sesión
-              </Button>
-            </>
+              </AuthButton>
+            </UserInfo>
           ) : (
-            <NavLink to="/login">
-              <FaUser />
+            <AuthButton as={Link} to="/login">
+              <FaSignInAlt />
               Iniciar Sesión
-            </NavLink>
+            </AuthButton>
           )}
         </NavLinks>
       </NavContainer>
