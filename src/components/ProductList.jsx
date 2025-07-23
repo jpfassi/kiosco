@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { useProducts } from '../contexts/ProductContext';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import Pagination from './Pagination';
-import ProductForm from './ProductForm';
 import styled from 'styled-components';
 import { FaShoppingCart, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
 
@@ -315,13 +315,12 @@ const ProductList = () => {
   const { products, loading, error, deleteProduct } = useProducts();
   const { addToCart } = useCart();
   const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
   
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchCategory, setSearchCategory] = useState('');
-  const [showForm, setShowForm] = useState(false);
-  const [editingProduct, setEditingProduct] = useState(null);
   const [itemsPerPage] = useState(6);
 
   useEffect(() => {
@@ -357,8 +356,11 @@ const ProductList = () => {
   };
 
   const handleEdit = (product) => {
-    setEditingProduct(product);
-    setShowForm(true);
+    navigate(`/edit-product?id=${product.id}`);
+  };
+
+  const handleAddProduct = () => {
+    navigate('/edit-product?id=new');
   };
 
   const handleDelete = async (productId) => {
@@ -369,16 +371,6 @@ const ProductList = () => {
         console.error('Error al eliminar el producto:', error);
       }
     }
-  };
-
-  const handleFormCancel = () => {
-    setShowForm(false);
-    setEditingProduct(null);
-  };
-
-  const handleFormSuccess = () => {
-    setShowForm(false);
-    setEditingProduct(null);
   };
 
   // Calcular productos para la página actual
@@ -408,22 +400,12 @@ const ProductList = () => {
     );
   }
 
-  if (showForm) {
-    return (
-      <ProductForm
-        product={editingProduct}
-        onCancel={handleFormCancel}
-        onSuccess={handleFormSuccess}
-      />
-    );
-  }
-
   return (
     <Container>
       <Header>
         <Title>Productos</Title>
         {isAuthenticated && (
-          <AddButton onClick={() => setShowForm(true)}>
+          <AddButton onClick={() => handleAddProduct()}>
             <FaPlus />
             Agregar Producto
           </AddButton>

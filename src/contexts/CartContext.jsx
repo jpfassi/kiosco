@@ -1,13 +1,35 @@
-import { createContext, useContext, useReducer } from 'react';
+import { createContext, useContext, useReducer, useEffect } from 'react';
 
 const CartContext = createContext();
 
+// Función para cargar el carrito desde localStorage
+const loadCartFromStorage = () => {
+  try {
+    const savedCart = localStorage.getItem('cart');
+    return savedCart ? JSON.parse(savedCart) : { items: [] };
+  } catch (error) {
+    console.error('Error loading cart from storage:', error);
+    return { items: [] };
+  }
+};
+
+// Función para guardar el carrito en localStorage
+const saveCartToStorage = (cart) => {
+  try {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  } catch (error) {
+    console.error('Error saving cart to storage:', error);
+  }
+};
+
 const cartReducer = (state, action) => {
+  let newState;
+  
   switch (action.type) {
     case 'ADD_ITEM':
       const existingItem = state.items.find(item => item.id === action.payload.id);
       if (existingItem) {
-        return {
+        newState = {
           ...state,
           items: state.items.map(item =>
             item.id === action.payload.id
@@ -16,20 +38,25 @@ const cartReducer = (state, action) => {
           ),
         };
       } else {
-        return {
+        newState = {
           ...state,
           items: [...state.items, { ...action.payload, quantity: 1 }],
         };
       }
+      // Guardar en localStorage después de cada cambio
+      saveCartToStorage(newState);
+      return newState;
 
     case 'REMOVE_ITEM':
-      return {
+      newState = {
         ...state,
         items: state.items.filter(item => item.id !== action.payload),
       };
+      saveCartToStorage(newState);
+      return newState;
 
     case 'UPDATE_QUANTITY':
-      return {
+      newState = {
         ...state,
         items: state.items.map(item =>
           item.id === action.payload.id
@@ -37,12 +64,19 @@ const cartReducer = (state, action) => {
             : item
         ),
       };
+      saveCartToStorage(newState);
+      return newState;
 
     case 'CLEAR_CART':
-      return {
+      newState = {
         ...state,
         items: [],
       };
+      saveCartToStorage(newState);
+      return newState;
+
+    case 'LOAD_CART':
+      return action.payload;
 
     default:
       return state;
@@ -51,6 +85,12 @@ const cartReducer = (state, action) => {
 
 export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, { items: [] });
+
+  // Cargar el carrito desde localStorage al inicializar
+  useEffect(() => {
+    const savedCart = loadCartFromStorage();
+    dispatch({ type: 'LOAD_CART', payload: savedCart });
+  }, []);
 
   const addToCart = (product) => {
     dispatch({ type: 'ADD_ITEM', payload: product });
@@ -82,6 +122,7 @@ export const CartProvider = ({ children }) => {
 
   const value = {
     items: state.items,
+    cartItems: state.items,
     addToCart,
     removeFromCart,
     updateQuantity,

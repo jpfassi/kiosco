@@ -14,6 +14,7 @@ import Navbar from './components/Navbar';
 import ProductList from './components/ProductList';
 import Cart from './components/Cart';
 import Login from './components/Login';
+import ProductForm from './components/ProductForm';
 
 // Styles
 import './App.css';
@@ -30,6 +31,8 @@ function App() {
                 <main>
                   <Routes>
                     <Route path="/" element={<ProductList />} />
+                    <Route path="/products" element={<ProductList />} />
+                    <Route path="/edit-product" element={<ProductForm />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/login" element={<Login />} />
                   </Routes>

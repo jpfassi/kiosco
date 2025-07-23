@@ -1,12 +1,52 @@
 import { useState, useEffect } from 'react';
 import { useProducts } from '../contexts/ProductContext';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { FaSave, FaTimes } from 'react-icons/fa';
+import { FaSave, FaTimes, FaArrowLeft, FaHome } from 'react-icons/fa';
 
 const FormContainer = styled.div`
   max-width: 600px;
   margin: 0 auto;
   padding: 2rem;
+  position: relative;
+  z-index: 1;
+`;
+
+const NavigationBar = styled.div`
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+`;
+
+const NavButton = styled.button`
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.6);
+  }
+  
+  &.home {
+    background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+    box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+    
+    &:hover {
+      box-shadow: 0 10px 30px rgba(78, 205, 196, 0.6);
+    }
+  }
 `;
 
 const Form = styled.form`
@@ -14,6 +54,8 @@ const Form = styled.form`
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
 `;
 
 const Title = styled.h2`
@@ -126,8 +168,12 @@ const SuccessMessage = styled.div`
   margin-top: 0.5rem;
 `;
 
-const ProductForm = ({ product = null, onCancel }) => {
-  const { createProduct, updateProduct } = useProducts();
+const ProductForm = ({ product = null, onCancel, onSuccess }) => {
+  const { createProduct, updateProduct, products } = useProducts();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const productId = searchParams.get('id');
+  
   const [formData, setFormData] = useState({
     name: '',
     price: '',
@@ -139,17 +185,21 @@ const ProductForm = ({ product = null, onCancel }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
+  // Determinar si estamos editando o creando
+  const isEditing = productId && productId !== 'new';
+  const currentProduct = isEditing ? products.find(p => p.id === parseInt(productId)) : null;
+
   useEffect(() => {
-    if (product) {
+    if (currentProduct) {
       setFormData({
-        name: product.name || '',
-        price: product.price || '',
-        description: product.description || '',
-        image: product.image || '',
-        category: product.category || '',
+        name: currentProduct.name || '',
+        price: currentProduct.price || '',
+        description: currentProduct.description || '',
+        image: currentProduct.image || '',
+        category: currentProduct.category || '',
       });
     }
-  }, [product]);
+  }, [currentProduct]);
 
   const validateForm = () => {
     const newErrors = {};
@@ -210,9 +260,12 @@ const ProductForm = ({ product = null, onCancel }) => {
         price: parseFloat(formData.price),
       };
 
-      if (product) {
-        await updateProduct(product.id, productData);
+      if (currentProduct) {
+        await updateProduct(currentProduct.id, productData);
         setSuccessMessage('Producto actualizado exitosamente');
+        setTimeout(() => {
+          navigate('/products');
+        }, 1500);
       } else {
         await createProduct(productData);
         setSuccessMessage('Producto creado exitosamente');
@@ -223,6 +276,9 @@ const ProductForm = ({ product = null, onCancel }) => {
           image: '',
           category: '',
         });
+        setTimeout(() => {
+          navigate('/products');
+        }, 1500);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -233,8 +289,16 @@ const ProductForm = ({ product = null, onCancel }) => {
 
   return (
     <FormContainer>
+      <NavigationBar>
+        <NavButton onClick={() => navigate('/products')} className="home">
+          <FaHome /> Inicio
+        </NavButton>
+        <NavButton onClick={() => navigate(-1)}>
+          <FaArrowLeft /> Volver
+        </NavButton>
+      </NavigationBar>
       <Form onSubmit={handleSubmit}>
-        <Title>{product ? 'Editar Producto' : 'Agregar Nuevo Producto'}</Title>
+        <Title>{currentProduct ? 'Editar Producto' : 'Agregar Nuevo Producto'}</Title>
         
         <FormGroup>
           <Label htmlFor="name">Nombre del Producto *</Label>
@@ -313,13 +377,13 @@ const ProductForm = ({ product = null, onCancel }) => {
             disabled={isSubmitting}
           >
             <FaSave />
-            {isSubmitting ? 'Guardando...' : (product ? 'Actualizar' : 'Crear')}
+            {isSubmitting ? 'Guardando...' : (currentProduct ? 'Actualizar' : 'Crear')}
           </Button>
           
           <Button
             type="button"
             className="secondary"
-            onClick={onCancel}
+            onClick={() => navigate('/products')}
           >
             <FaTimes />
             Cancelar

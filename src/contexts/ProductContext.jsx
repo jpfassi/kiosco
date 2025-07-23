@@ -60,6 +60,26 @@ const MOCK_PRODUCTS = [
   }
 ];
 
+// Función para cargar productos desde localStorage
+const loadProductsFromStorage = () => {
+  try {
+    const savedProducts = localStorage.getItem('products');
+    return savedProducts ? JSON.parse(savedProducts) : MOCK_PRODUCTS;
+  } catch (error) {
+    console.error('Error loading products from storage:', error);
+    return MOCK_PRODUCTS;
+  }
+};
+
+// Función para guardar productos en localStorage
+const saveProductsToStorage = (products) => {
+  try {
+    localStorage.setItem('products', JSON.stringify(products));
+  } catch (error) {
+    console.error('Error saving products to storage:', error);
+  }
+};
+
 export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -74,8 +94,9 @@ export const ProductProvider = ({ children }) => {
       // Simular delay de red
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Usar datos mock en lugar de API
-      setProducts(MOCK_PRODUCTS);
+      // Cargar productos desde localStorage o usar datos mock
+      const savedProducts = loadProductsFromStorage();
+      setProducts(savedProducts);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -97,7 +118,9 @@ export const ProductProvider = ({ children }) => {
         image: productData.image || 'https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=300&h=300&fit=crop'
       };
       
-      setProducts(prev => [...prev, newProduct]);
+      const updatedProducts = [...products, newProduct];
+      setProducts(updatedProducts);
+      saveProductsToStorage(updatedProducts);
       return newProduct;
     } catch (err) {
       setError(err.message);
@@ -114,11 +137,12 @@ export const ProductProvider = ({ children }) => {
       await new Promise(resolve => setTimeout(resolve, 500));
       
       const updatedProduct = { ...productData, id };
-      setProducts(prev => 
-        prev.map(product => 
-          product.id === id ? updatedProduct : product
-        )
+      const updatedProducts = products.map(product => 
+        product.id === id ? updatedProduct : product
       );
+      
+      setProducts(updatedProducts);
+      saveProductsToStorage(updatedProducts);
       return updatedProduct;
     } catch (err) {
       setError(err.message);
@@ -134,7 +158,9 @@ export const ProductProvider = ({ children }) => {
       // Simular delay de red
       await new Promise(resolve => setTimeout(resolve, 300));
       
-      setProducts(prev => prev.filter(product => product.id !== id));
+      const updatedProducts = products.filter(product => product.id !== id);
+      setProducts(updatedProducts);
+      saveProductsToStorage(updatedProducts);
     } catch (err) {
       setError(err.message);
       throw err;

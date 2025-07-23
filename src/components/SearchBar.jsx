@@ -15,7 +15,7 @@ const SearchContainer = styled.div`
 const SearchForm = styled.form`
   display: flex;
   gap: 1.5rem;
-  align-items: center;
+  align-items: flex-end;
   flex-wrap: wrap;
 `;
 

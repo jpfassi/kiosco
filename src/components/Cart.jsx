@@ -336,7 +336,7 @@ const ActionButton = styled.button`
 `;
 
 const Cart = () => {
-  const { cartItems, removeFromCart, updateQuantity, clearCart, getTotal } = useCart();
+  const { items, removeFromCart, updateQuantity, clearCart, getTotalPrice, getTotalItems } = useCart();
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -345,7 +345,7 @@ const Cart = () => {
     return null;
   }
 
-  if (cartItems.length === 0) {
+  if (items.length === 0) {
     return (
       <Container>
         <Header>
@@ -379,7 +379,7 @@ const Cart = () => {
       </Header>
 
       <CartItems>
-        {cartItems.map((item) => (
+        {items.map((item) => (
           <CartItem key={item.id}>
             <ItemImage src={item.image} alt={item.name} />
             <ItemInfo>
@@ -412,12 +412,12 @@ const Cart = () => {
 
       <CartSummary>
         <SummaryRow>
-          <span>Subtotal:</span>
-          <span>${getTotal().toFixed(2)}</span>
+          <span>Subtotal ({getTotalItems()} items):</span>
+          <span>${getTotalPrice().toFixed(2)}</span>
         </SummaryRow>
         <SummaryRow>
           <span>Total:</span>
-          <span>${getTotal().toFixed(2)}</span>
+          <span>${getTotalPrice().toFixed(2)}</span>
         </SummaryRow>
       </CartSummary>
 

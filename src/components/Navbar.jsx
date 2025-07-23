@@ -11,7 +11,7 @@ const Nav = styled.nav`
   padding: 1rem 2rem;
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 9999;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 `;
 
@@ -119,32 +119,19 @@ const CartButton = styled(Link)`
 
 const CartBadge = styled.span`
   position: absolute;
-  top: -8px;
-  right: -8px;
-  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+  top: 2px;
+  right: 2px;
+  background: #ff4757;
   color: white;
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
-  font-weight: 700;
-  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.6);
-  animation: pulse 2s infinite;
-  
-  @keyframes pulse {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.1);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
+  font-size: 12px;
+  font-weight: bold;
+  border: 2px solid white;
 `;
 
 const UserInfo = styled.div`
@@ -202,10 +189,10 @@ const AuthButton = styled.button`
 `;
 
 const Navbar = () => {
-  const { cartItems } = useCart();
+  const { items } = useCart();
   const { isAuthenticated, user, logout } = useAuth();
 
-  const cartItemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const cartItemCount = items.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <Nav>
