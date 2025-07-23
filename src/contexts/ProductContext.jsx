@@ -1,73 +1,16 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import productsData from '../data/products.json';
 
 const ProductContext = createContext();
-
-// Datos mock locales para que funcione inmediatamente
-const MOCK_PRODUCTS = [
-  {
-    id: 1,
-    name: 'Chocolate KitKat',
-    price: 2.50,
-    category: 'Chocolate',
-    description: 'Delicioso chocolate con galletas crujientes',
-    image: 'https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=300&h=300&fit=crop',
-    stock: 50
-  },
-  {
-    id: 2,
-    name: 'Caramelos M&M',
-    price: 1.80,
-    category: 'Caramelos',
-    description: 'Caramelos de chocolate con cáscara colorida',
-    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop',
-    stock: 75
-  },
-  {
-    id: 3,
-    name: 'Gomitas Ositos',
-    price: 3.20,
-    category: 'Gomitas',
-    description: 'Gomitas suaves con forma de ositos',
-    image: 'https://images.unsplash.com/photo-1553451191-6d7232c0c2a0?w=300&h=300&fit=crop',
-    stock: 30
-  },
-  {
-    id: 4,
-    name: 'Chocolate Snickers',
-    price: 2.80,
-    category: 'Chocolate',
-    description: 'Chocolate con caramelo y maní',
-    image: 'https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=300&h=300&fit=crop',
-    stock: 45
-  },
-  {
-    id: 5,
-    name: 'Paletas Chupa Chups',
-    price: 1.50,
-    category: 'Paletas',
-    description: 'Paletas de caramelo con diferentes sabores',
-    image: 'https://images.unsplash.com/photo-1553451191-6d7232c0c2a0?w=300&h=300&fit=crop',
-    stock: 60
-  },
-  {
-    id: 6,
-    name: 'Chocolate Twix',
-    price: 2.90,
-    category: 'Chocolate',
-    description: 'Chocolate con galletas y caramelo',
-    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop',
-    stock: 40
-  }
-];
 
 // Función para cargar productos desde localStorage
 const loadProductsFromStorage = () => {
   try {
     const savedProducts = localStorage.getItem('products');
-    return savedProducts ? JSON.parse(savedProducts) : MOCK_PRODUCTS;
+    return savedProducts ? JSON.parse(savedProducts) : productsData;
   } catch (error) {
     console.error('Error loading products from storage:', error);
-    return MOCK_PRODUCTS;
+    return productsData;
   }
 };
 

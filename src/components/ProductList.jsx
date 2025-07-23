@@ -3,10 +3,11 @@ import { useProducts } from '../contexts/ProductContext';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { exportProductsToFile } from '../utils/exportProducts';
 import SearchBar from './SearchBar';
 import Pagination from './Pagination';
 import styled from 'styled-components';
-import { FaShoppingCart, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
+import { FaShoppingCart, FaEdit, FaTrash, FaPlus, FaDownload } from 'react-icons/fa';
 
 const Container = styled.div`
   padding: 2rem;
@@ -405,10 +406,19 @@ const ProductList = () => {
       <Header>
         <Title>Productos</Title>
         {isAuthenticated && (
-          <AddButton onClick={() => handleAddProduct()}>
-            <FaPlus />
-            Agregar Producto
-          </AddButton>
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <AddButton onClick={() => handleAddProduct()}>
+              <FaPlus />
+              Agregar Producto
+            </AddButton>
+            <AddButton 
+              onClick={() => exportProductsToFile()}
+              style={{ background: 'linear-gradient(135deg, #28a745 0%, #20c997 100%)' }}
+            >
+              <FaDownload />
+              Exportar Productos
+            </AddButton>
+          </div>
         )}
       </Header>
 
