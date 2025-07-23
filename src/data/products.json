@@ -2,55 +2,55 @@
   {
     "id": 1,
     "name": "Chocolate KitKat",
-    "price": 2.50,
+    "price": 2.5,
     "category": "Chocolate",
     "description": "Delicioso chocolate con galletas crujientes",
-    "image": "https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=300&h=300&fit=crop",
+    "image": "https://images.megapixl.com/mpt/969759952525.jpg",
     "stock": 50
   },
   {
     "id": 2,
     "name": "Caramelos M&M",
-    "price": 1.80,
+    "price": 1.8,
     "category": "Caramelos",
     "description": "Caramelos de chocolate con cáscara colorida",
-    "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop",
+    "image": "https://images.megapixl.com/mpt/869997754515.jpg",
     "stock": 75
   },
   {
     "id": 3,
     "name": "Gomitas Ositos",
-    "price": 3.20,
+    "price": 3.2,
     "category": "Gomitas",
     "description": "Gomitas suaves con forma de ositos",
-    "image": "https://images.unsplash.com/photo-1553451191-6d7232c0c2a0?w=300&h=300&fit=crop",
+    "image": "https://images.megapixl.com/mpt/117737849740.jpg",
     "stock": 30
   },
   {
     "id": 4,
     "name": "Chocolate Snickers",
-    "price": 2.80,
+    "price": 2.8,
     "category": "Chocolate",
     "description": "Chocolate con caramelo y maní",
-    "image": "https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=300&h=300&fit=crop",
+    "image": "https://images.megapixl.com/mpt/810842010810.jpg",
     "stock": 45
   },
   {
     "id": 5,
     "name": "Paletas Chupa Chups",
-    "price": 1.50,
+    "price": 1.5,
     "category": "Paletas",
     "description": "Paletas de caramelo con diferentes sabores",
-    "image": "https://images.unsplash.com/photo-1553451191-6d7232c0c2a0?w=300&h=300&fit=crop",
+    "image": "https://images.megapixl.com/mpt/96147177525.jpg",
     "stock": 60
   },
   {
     "id": 6,
     "name": "Chocolate Twix",
-    "price": 2.90,
+    "price": 2.9,
     "category": "Chocolate",
     "description": "Chocolate con galletas y caramelo",
-    "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop",
+    "image": "https://images.megapixl.com/mpt/06001946735.jpg",
     "stock": 40
   }
 ] 
