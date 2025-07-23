@@ -1,32 +1,50 @@
-{
-  "name": "e-commerce-1.0",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+[
+  {
+    "name": "Chocolate KitKat",
+    "price": 2.5,
+    "description": "Delicioso chocolate con galletas crujientes",
+    "image": "https://images.megapixl.com/mpt/969759952525.jpg",
+    "category": "Chocolate",
+    "id": 1
   },
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.3",
-    "styled-components": "^6.1.8",
-    "react-icons": "^5.0.1",
-    "react-toastify": "^10.0.4",
-    "react-helmet-async": "^2.0.4",
-    "bootstrap": "^5.3.3",
-    "sweetalert2": "^11.10.7"
+  {
+    "name": "Caramelos M&M",
+    "price": 1.8,
+    "description": "Caramelos de chocolate con cáscara colorida",
+    "image": "https://images.megapixl.com/mpt/869997754515.jpg",
+    "category": "Caramelos",
+    "id": 2
   },
-  "devDependencies": {
-    "@types/react": "^18.2.64",
-    "@types/react-dom": "^18.2.21",
-    "@vitejs/plugin-react": "^4.2.1",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.5",
-    "vite": "^5.1.6"
+  {
+    "name": "Gomitas Ositos",
+    "price": 3.2,
+    "description": "Gomitas suaves con forma de ositos",
+    "image": "https://images.megapixl.com/mpt/117737849740.jpg",
+    "category": "Gomitas",
+    "id": 3
+  },
+  {
+    "name": "Chocolate Snickers",
+    "price": 2.8,
+    "description": "Chocolate con caramelo y maní",
+    "image": "https://images.megapixl.com/mpt/810842010810.jpg",
+    "category": "Chocolate",
+    "id": 4
+  },
+  {
+    "name": "Paletas Chupa Chups",
+    "price": 1.5,
+    "description": "Paletas de caramelo con diferentes sabores",
+    "image": "https://images.megapixl.com/mpt/96147177525.jpg",
+    "category": "Paletas",
+    "id": 5
+  },
+  {
+    "name": "Chocolate Twix",
+    "price": 2.9,
+    "description": "Chocolate con galletas y caramelo",
+    "image": "https://images.megapixl.com/mpt/06001946735.jpg",
+    "category": "Chocolate",
+    "id": 6
   }
-}
+]
