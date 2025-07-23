@@ -315,9 +315,9 @@ const ProductList = () => {
                   <ProductName>{product.name}</ProductName>
                   <ProductCategory>{product.category}</ProductCategory>
                   <ProductDescription>
-                    {product.description.length > 100
+                    {product.description && product.description.length > 100
                       ? `${product.description.substring(0, 100)}...`
-                      : product.description}
+                      : product.description || 'Sin descripción'}
                   </ProductDescription>
                   <ProductPrice>${product.price}</ProductPrice>
                   
