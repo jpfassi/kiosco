@@ -163,7 +163,7 @@ Los datos de los productos son obtenidos de la siguiente API mock:
 ## Demo en Vivo
 
 Puedes ver una versión funcionando del proyecto aquí:
-[https://timely-cranachan-39a87a.netlify.app/](https://timely-cranachan-39a87a.netlify.app/)
+[https://netlify.app/](https://6882c66eff39f900089bd037--sparkly-biscuit-7845a0.netlify.app/)
 
 ## Características Destacadas
 
