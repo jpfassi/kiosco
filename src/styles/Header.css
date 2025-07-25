@@ -1,0 +1,200 @@
+/* Ajuste del body para el header fijo */
+body, #root {
+    padding-top: 80px;
+}
+
+/* Contenedor principal del header */
+.header-container {
+    background-color: #4CAF50;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 0.5rem 1rem;
+}
+
+/* Layout principal del header */
+.header-container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Parte 1: Nombre del Kiosco */
+.header-brand {
+    justify-self: start;
+}
+
+.brand-link {
+    color: white;
+    text-decoration: none;
+}
+
+.brand-link h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Parte 2: Menú de Navegación */
+.header-nav {
+    display: flex;
+    gap: 1.5rem;
+    justify-self: center;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #e8f5e8;
+}
+
+.nav-link.active {
+    color: #fff;
+    font-weight: bold;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+/* Parte 3: Botones */
+.header-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-self: end;
+}
+
+.header-button {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: 1px solid white;
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.header-button:hover {
+    background-color: white;
+    color: #4CAF50;
+}
+
+.cart-button {
+    position: relative;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #ff4444;
+    color: white;
+    border-radius: 50%;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    min-width: 18px;
+    text-align: center;
+}
+
+/* Diseño responsivo para pantallas medianas */
+@media (max-width: 768px) {
+    .header-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+    
+    .header-brand {
+        justify-self: center;
+    }
+    
+    .header-nav {
+        justify-self: center;
+        gap: 1rem;
+    }
+    
+    .header-buttons {
+        justify-self: center;
+    }
+    
+    .brand-link h1 {
+        font-size: 1.3rem;
+    }
+    
+    .nav-link {
+        font-size: 0.9rem;
+    }
+    
+    .header-button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* Diseño responsivo para pantallas pequeñas */
+@media (max-width: 480px) {
+    body, #root {
+        padding-top: 120px;
+    }
+    
+    .header-container {
+        padding: 0.3rem;
+    }
+    
+    .brand-link h1 {
+        font-size: 1.1rem;
+    }
+    
+    .header-nav {
+        gap: 0.5rem;
+    }
+    
+    .nav-link {
+        font-size: 0.8rem;
+        padding: 0.3rem;
+    }
+    
+    .header-buttons {
+        gap: 0.5rem;
+    }
+    
+    .header-button {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* Diseño responsivo para pantallas muy pequeñas */
+@media (max-width: 360px) {
+    .header-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .nav-link {
+        font-size: 0.75rem;
+    }
+    
+    .header-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .header-button {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.5rem;
+    }
+} 
